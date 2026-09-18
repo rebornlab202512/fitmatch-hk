@@ -1,8 +1,8 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "fitmatch-hk", // 請替換成您的 Cloudflare 專案名稱
+  "name": "fitmatch-hk",
   "compatibility_date": "2026-09-18",
   "assets": {
-    "directory": "./" // 告訴系統 HTML/靜態檔案就在根目錄
+    "directory": "./"
   }
 }
