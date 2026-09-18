@@ -1,5 +1,8 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "fitmatch-hk", // 請替換成你在 Cloudflare Pages 上的專案名稱
-  "pages_build_output_dir": "./" // 靜態網頁檔案所在目錄（通常就是根目錄 ./）
+  "name": "fitmatch-hk", // 請替換成您的 Cloudflare 專案名稱
+  "compatibility_date": "2026-09-18",
+  "assets": {
+    "directory": "./" // 告訴系統 HTML/靜態檔案就在根目錄
+  }
 }
