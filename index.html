@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitMatch 健身通 - 全港首選私人健身教練免費配對平台</title>
+    <meta name="description" content="免費幫你配對全港專業健身教練！涵蓋上門、戶外、24小時健身室，最快15分鐘聯絡。內建 TDEE 計算機與試堂優惠。">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Alpine.js (簡易前端邏輯與計算機) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+        }
+        .accent-gradient {
+            background: linear-gradient(90deg, #F97316 0%, #FB923C 100%);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased" x-data="{ modalOpen: false, activeTab: 'matching' }">
+
+    <!-- 導覽列 -->
+    <nav class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md text-white border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-bolt text-orange-500 text-2xl"></i>
+                <span class="text-xl font-bold tracking-wider">FitMatch<span class="text-orange-500">健身通</span></span>
+            </div>
+            <div class="hidden md:flex space-x-8 text-sm font-medium">
+                <a href="#how-it-works" class="hover:text-orange-400 transition">配對流程</a>
+                <a href="#tdee-calculator" class="hover:text-orange-400 transition">TDEE 免費計算機</a>
+                <a href="#features" class="hover:text-orange-400 transition">平台優勢</a>
+                <a href="#coaches" class="hover:text-orange-400 transition">嚴選教練</a>
+            </div>
+            <button @click="modalOpen = true" class="accent-gradient text-white font-bold px-5 py-2 rounded-full shadow-lg hover:brightness-110 transition">
+                免費發布需求
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero 英雄區塊 (強大 Call-to-Action) -->
+    <section class="gradient-bg text-white py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <span class="bg-orange-500/20 text-orange-400 border border-orange-500/30 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase inline-block mb-4">
+                ⚡ 零中介費 · 最快 15 分鐘獲得回應
+            </span>
+            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight mb-6">
+                不用再盲目尋找，<br><span class="text-transparent bg-clip-text accent-gradient">讓最合適的健身教練找到你！</span>
+            </h1>
+            <p class="text-lg sm:text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
+                自由選擇場地（戶外、會所、上門、24h健身房），自訂目標與預算。完全免費，教練直接 WhatsApp 報價，免綁約試堂！
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button @click="modalOpen = true" class="accent-gradient text-white text-lg font-bold px-8 py-4 rounded-xl shadow-xl hover:scale-105 transition transform">
+                    <i class="fa-solid fa-paper-plane mr-2"></i>免費發布配對需求
+                </button>
+                <a href="#tdee-calculator" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-lg font-semibold px-8 py-4 rounded-xl transition">
+                    <i class="fa-solid fa-calculator mr-2"></i>先測算我的 TDEE
+                </a>
+            </div>
+            <!-- 數據信任指標 -->
+            <div class="mt-12 grid grid-cols-3 gap-4 border-t border-slate-800 pt-8 max-w-lg mx-auto text-center">
+                <div>
+                    <div class="text-2xl font-bold text-orange-400">500+</div>
+                    <div class="text-xs text-slate-400">認證專業教練</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold text-orange-400">12,000+</div>
+                    <div class="text-xs text-slate-400">成功配對案例</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold text-orange-400">4.9 ★</div>
+                    <div class="text-xs text-slate-400">學員滿意度</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 高流量 SEO 工具區：TDEE / 熱量計算機 -->
+    <section id="tdee-calculator" class="py-16 bg-slate-100" x-data="{ 
+        gender: 'male', age: 25, weight: 70, height: 175, activity: 1.375, tdee: 0,
+        calc() {
+            let bmr = (this.gender === 'male') 
+                ? (10 * this.weight + 6.25 * this.height - 5 * this.age + 5)
+                : (10 * this.weight + 6.25 * this.height - 5 * this.age - 161);
+            this.tdee = Math.round(bmr * this.activity);
+        }
+    }" x-init="calc()">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="bg-white rounded-2xl shadow-xl p-8 border border-slate-200">
+                <div class="text-center mb-8">
+                    <span class="text-orange-500 text-sm font-bold tracking-wider">🔥 SEO 免費工具</span>
+                    <h2 class="text-3xl font-bold text-slate-900 mt-1">TDEE 每日總熱量消耗試算</h2>
+                    <p class="text-slate-500 mt-2">想減脂還是增肌？先了解你每天需要吃多少熱量！</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">性別</label>
+                            <div class="flex gap-4">
+                                <label class="flex-1 text-center py-2 border rounded-lg cursor-pointer" :class="gender==='male'?'bg-orange-50 border-orange-500 font-bold text-orange-600':''">
+                                    <input type="radio" value="male" x-model="gender" @change="calc()" class="hidden"> 男性
+                                </label>
+                                <label class="flex-1 text-center py-2 border rounded-lg cursor-pointer" :class="gender==='female'?'bg-orange-50 border-orange-500 font-bold text-orange-600':''">
+                                    <input type="radio" value="female" x-model="gender" @change="calc()" class="hidden"> 女性
+                                </label>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2">
+                            <div>
+                                <label class="block text-xs font-medium text-slate-700">年齡</label>
+                                <input type="number" x-model="age" @input="calc()" class="w-full mt-1 border rounded-lg p-2 text-center">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-700">身高 (cm)</label>
+                                <input type="number" x-model="height" @input="calc()" class="w-full mt-1 border rounded-lg p-2 text-center">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-700">體重 (kg)</label>
+                                <input type="number" x-model="weight" @input="calc()" class="w-full mt-1 border rounded-lg p-2 text-center">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">活動量</label>
+                            <select x-model="activity" @change="calc()" class="w-full border rounded-lg p-2 text-sm">
+                                <option value="1.2">久坐 / 幾乎不運動</option>
+                                <option value="1.375">輕度運動（週 1-3 天）</option>
+                                <option value="1.55">中度運動（週 3-5 天）</option>
+                                <option value="1.725">高度運動（週 6-7 天）</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="bg-slate-900 text-white p-6 rounded-xl flex flex-col justify-between text-center">
+                        <div>
+                            <span class="text-slate-400 text-sm">估計您的 TDEE 每日熱量為</span>
+                            <div class="text-4xl font-extrabold text-orange-400 my-4" x-text="tdee + ' kcal'"></div>
+                            <div class="text-xs text-slate-400 space-y-1 text-left">
+                                <p>• 減脂目標：建議每日攝取 <span class="text-orange-300" x-text="Math.round(tdee*0.8) + ' kcal'"></span></p>
+                                <p>• 增肌目標：建議每日攝取 <span class="text-orange-300" x-text="Math.round(tdee*1.1) + ' kcal'"></span></p>
+                            </div>
+                        </div>
+                        <button @click="modalOpen = true" class="mt-4 w-full accent-gradient py-2.5 rounded-lg font-bold text-sm hover:opacity-90">
+                            尋找能協助飲食規劃的教練 →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 配對流程說明 -->
+    <section id="how-it-works" class="py-16">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-12">只需 3 步，開始你的健身計畫</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-100">
+                    <div class="w-12 h-12 bg-orange-100 text-orange-500 rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-4">1</div>
+                    <h3 class="text-xl font-bold mb-2">提交免費需求</h3>
+                    <p class="text-slate-600 text-sm">填寫目標（減脂/康復）、偏好地區（如上門、觀塘、銅鑼灣）及預算。</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-100">
+                    <div class="w-12 h-12 bg-orange-100 text-orange-500 rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-4">2</div>
+                    <h3 class="text-xl font-bold mb-2">教練主動報價</h3>
+                    <p class="text-slate-600 text-sm">合資格的驗證教練會透過 WhatsApp 直接聯絡你，提供課程建議與報價。</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-100">
+                    <div class="w-12 h-12 bg-orange-100 text-orange-500 rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-4">3</div>
+                    <h3 class="text-xl font-bold mb-2">自由比較與試堂</h3>
+                    <p class="text-slate-600 text-sm">選擇最心儀的教練安排試堂。免合約、不強制購買大量課程套餐。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 彈出式表單 modal (與系統配對機制) -->
+    <div x-show="modalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" x-cloak>
+        <div @click.away="modalOpen = false" class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl relative">
+            <button @click="modalOpen = false" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xl">&times;</button>
+            <h3 class="text-2xl font-bold text-slate-900 mb-2">發布您的健身需求</h3>
+            <p class="text-slate-500 text-sm mb-6">我們將保護您的隱私，僅將需求發送給合資格教練。</p>
+            <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-700 mb-1">您的健身目標</label>
+                    <select name="goal" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm">
+                        <option>快速減脂 / 體重管理</option>
+                        <option>增肌塑形 / 力量訓練</option>
+                        <option>產後修復 / 姿勢矯正</option>
+                        <option>銀髮族體適能 / 康復訓練</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-700 mb-1">上課地點偏好</label>
+                    <input type="text" name="location" placeholder="例如：觀塘、上門服務、會所、24h健身房" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-700 mb-1">WhatsApp 聯絡電話</label>
+                    <input type="tel" name="phone" placeholder="例如：91234567" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm" required>
+                </div>
+                <button type="submit" class="w-full accent-gradient text-white font-bold py-3 rounded-lg shadow-md hover:brightness-110 transition">
+                    立即送出並免費配對
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 頁尾 -->
+    <footer class="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 text-center text-sm">
+        <p>© 2026 FitMatch 健身通. All rights reserved. 託管於 Cloudflare Pages 高速邊緣網路。</p>
+    </footer>
+
+</body>
+</html>
